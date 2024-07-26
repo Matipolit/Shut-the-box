@@ -102,6 +102,9 @@ function App() {
   const [currentSum, setCurrentSum] = useState(0);
   const [width, height] = useWindowSize();
 
+  const [wonRounds, setWonRounds] = useState(0);
+  const [lostRounds, setLostRounds] = useState(0);
+
   const cameraPosition = width < 600 ? [0, 0.5, 0.4] : [0, 0.42, 0.32];
   const canvasHeight = height * 0.7;
 
@@ -139,7 +142,12 @@ function App() {
     }
   }
 
-  function newGame() {
+  function newGame(won) {
+    if (won) {
+      setWonRounds(wonRounds + 1);
+    } else {
+      setLostRounds(lostRounds + 1);
+    }
     setGameState(GameState.START);
     setAcceptedBoxes(Array(12).fill(false));
     setBoxesToAccept(Array(12).fill(false));
@@ -166,7 +174,12 @@ function App() {
     <div className="game">
       <div className="controls">
         {gameState == GameState.START ? (
-          <h1>Gra zamknij skrzynkę</h1>
+          <>
+            <h1>Gra zamknij skrzynkę</h1>
+            <h3>
+              Wygrane rundy: {wonRounds} | przegrane rundy: {lostRounds}{" "}
+            </h3>
+          </>
         ) : gameState == GameState.THROWING_CUBES ? (
           <>
             <h1>Losuję...</h1>
@@ -205,10 +218,13 @@ function App() {
         ) : gameState == GameState.LOST ? (
           <>
             <h1>Przegrałeś 😥</h1>
-            <button onClick={newGame}>Nowa gra</button>
+            <button onClick={() => newGame(false)}>Nowa gra</button>
           </>
         ) : (
-          <h1>Wygrałeś! 🎉</h1>
+          <>
+            <h1>Wygrałeś! 🎉</h1>
+            <button onClick={() => newGame(true)}>Nowa gra</button>
+          </>
         )}
 
         {(gameState == GameState.START ||
