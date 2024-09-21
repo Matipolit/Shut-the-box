@@ -8,7 +8,7 @@ Running in the browser using React-three-fiber.
 3. Try to shut all the boxes to win.
 
 ## Where to play
-1. Open [In the browser](https://sienkiewicza114.duckdns.org/shut-the-box/)
+1. Open [In the browser](https://matipolit.ovh/shut-the-box/)
 
 ## How to run locally
 1. Clone the repository
